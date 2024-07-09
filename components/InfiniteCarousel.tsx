@@ -2,7 +2,15 @@
 
 import useWindowWidth from "@/hooks/useWindowWidth";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  memo,
+} from "react";
 
 interface InfiniteCarouselProps {
   children: ReactNode[];
@@ -12,7 +20,6 @@ const CAROUSEL_GAP = 16;
 
 export default function InfiniteCarousel({ children }: InfiniteCarouselProps) {
   const [childrenWidth, setChildrenWidth] = useState(0);
-  const childrenGapWidth = children.length * CAROUSEL_GAP;
   const [duplicates, setDuplicates] = useState(1);
 
   const windowWidth = useWindowWidth();
@@ -27,33 +34,44 @@ export default function InfiniteCarousel({ children }: InfiniteCarouselProps) {
     }
   });
 
-  const handleWheel = (event: WheelEvent) => {
-    const deltaX = event.deltaX;
-    const deltaY = event.deltaY;
-    const delta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : -deltaY;
+  const handleWheel = useCallback(
+    (event: WheelEvent) => {
+      const deltaX = event.deltaX;
+      const deltaY = event.deltaY;
+      const delta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : -deltaY;
 
-    x.set(x.get() - delta);
-  };
+      x.set(x.get() - delta);
+    },
+    [x],
+  );
 
   useEffect(() => {
     window.addEventListener("wheel", handleWheel);
     return () => {
       window.removeEventListener("wheel", handleWheel);
     };
-  }, []);
+  }, [handleWheel]);
 
-  // Duplicate children to create the infinite effect
-  let duplicatedChildren = [];
-  for (let i = 0; i < duplicates; i++) {
-    duplicatedChildren.push(...children);
-  }
+  useEffect(() => {
+    if (childrenWidth > 0) {
+      setDuplicates(Math.ceil(windowWidth / childrenWidth) + 1);
+    }
+  }, [windowWidth, childrenWidth]);
+
+  const duplicatedChildren = useMemo(() => {
+    let duplicatesArray = [];
+    for (let i = 0; i < duplicates; i++) {
+      duplicatesArray.push(...children);
+    }
+    return duplicatesArray;
+  }, [children, duplicates]);
 
   if (childrenWidth === 0) {
     return (
       <div className="invisible">
         <MeasureWidth
           onWidthChange={(width) => {
-            setChildrenWidth(width + childrenGapWidth);
+            setChildrenWidth(width + children.length * CAROUSEL_GAP);
             setDuplicates(Math.ceil(windowWidth / width) + 1);
           }}
         >
@@ -91,7 +109,10 @@ const getTotalWidth = (elements: HTMLElement[]): number => {
   );
 };
 
-function MeasureWidth({ children, onWidthChange }: MeasureWidthProps) {
+const MeasureWidth = memo(function MeasureWidth({
+  children,
+  onWidthChange,
+}: MeasureWidthProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const measureWidth = useCallback(() => {
@@ -113,4 +134,4 @@ function MeasureWidth({ children, onWidthChange }: MeasureWidthProps) {
       {children}
     </div>
   );
-}
+});
