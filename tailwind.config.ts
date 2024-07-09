@@ -19,9 +19,14 @@ const config: Config = {
         "0%": { opacity: "0%" },
         "100%": { opacity: "100%" },
       },
+      "move-in": {
+        "0%": { opacity: "0%", transform: "translateX(-64px)" },
+        "100%": { opacity: "100%", transform: "translateX(0px)" },
+      },
     },
     animation: {
       appear: "appear 300ms ease-out forwards",
+      "move-in": "move-in 600ms cubic-bezier(0, 0, 0, 1) forwards",
     },
   },
   plugins: [],

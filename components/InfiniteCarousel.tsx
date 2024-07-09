@@ -111,13 +111,10 @@ export default function InfiniteCarousel({ children }: InfiniteCarouselProps) {
   }
 
   return (
-    <div className="overflow-hidden whitespace-nowrap select-none py-4">
+    <div className="overflow-hidden whitespace-nowrap select-none py-4 animate-move-in">
       <motion.div
         className="inline-flex items-center"
         style={{ x: loopX, gap: CAROUSEL_GAP }}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
       >
         {duplicatedChildren.map((child, index) => (
           <div key={index} className="shrink-0" onClick={handleClick}>
