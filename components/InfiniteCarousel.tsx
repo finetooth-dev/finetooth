@@ -44,7 +44,7 @@ export default function InfiniteCarousel({ children }: InfiniteCarouselProps) {
   }, []);
 
   const handlePointerMove = useCallback((event: PointerEvent) => {
-    if (event.buttons !== 1) return; // Only handle left mouse button or touch
+    if (event.buttons !== 1) return;
 
     const moveDelta = event.clientX - startX.get();
 
@@ -53,7 +53,7 @@ export default function InfiniteCarousel({ children }: InfiniteCarouselProps) {
     }
 
     x.set(x.get() + moveDelta);
-    startX.set(event.clientX); // Update startX to the current position for continuous dragging
+    startX.set(event.clientX);
   }, []);
 
   const handlePointerUp = useCallback(() => {
