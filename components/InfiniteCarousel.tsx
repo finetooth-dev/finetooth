@@ -1,64 +1,70 @@
 "use client";
 
-import useWindowWidth from "@/hooks/useWindowWidth";
-import MeasureWidth from "@/lib/MeasureWidth";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import useMeasure from "@/util/useMeasure";
+import {
+  motion,
+  MotionValue,
+  useMotionTemplate,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
+import React, {
+  ReactNode,
+  useEffect,
+  Children,
+  FC,
+  useState,
+  useCallback,
+} from "react";
 
-interface InfiniteCarouselProps {
-  children: ReactNode[];
+interface CarouselProps {
+  children: ReactNode;
 }
 
-const CAROUSEL_GAP = 16;
 const DRAG_THRESHOLD = 5;
 
-export default function InfiniteCarousel({ children }: InfiniteCarouselProps) {
-  const [childrenWidth, setChildrenWidth] = useState(0);
-  const [duplicates, setDuplicates] = useState(1);
+export const Carousel: FC<CarouselProps> = ({ children }) => {
+  const [ref, { width, height }] = useMeasure<HTMLDivElement>();
+  const numItems = Children.count(children);
+  const angleStep = 360 / numItems;
+
   const [isDragging, setIsDragging] = useState(false);
 
-  const windowWidth = useWindowWidth();
+  const rotation = useMotionValue(0);
+  const startY = useMotionValue(0);
 
-  const x = useMotionValue(CAROUSEL_GAP);
-  const startX = useMotionValue(0);
-  const smoothX = useSpring(x, { stiffness: 100, damping: 25 });
-  const loopX = useTransform(smoothX, (value) => {
-    if (value < 0) {
-      return value % childrenWidth;
-    } else {
-      return (value % childrenWidth) - childrenWidth;
-    }
-  });
-
-  const handleWheel = useCallback((event: WheelEvent) => {
-    const deltaX = event.deltaX;
-    const deltaY = event.deltaY;
-    const delta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : -deltaY;
-
-    x.set(x.get() - delta);
-  }, []);
+  const handleWheel = (e: WheelEvent) => {
+    rotation.set(rotation.get() + e.deltaY * 0.1);
+  };
 
   const handlePointerDown = useCallback((event: PointerEvent) => {
     setIsDragging(false);
-    startX.set(event.clientX);
+    startY.set(event.clientY);
   }, []);
 
   const handlePointerMove = useCallback((event: PointerEvent) => {
     if (event.buttons !== 1) return;
 
-    const moveDelta = event.clientX - startX.get();
+    const moveDelta = event.clientY - startY.get();
 
     if (Math.abs(moveDelta) > DRAG_THRESHOLD) {
       setIsDragging(true);
     }
 
-    x.set(x.get() + moveDelta);
-    startX.set(event.clientX);
+    rotation.set(rotation.get() - moveDelta);
+    startY.set(event.clientY);
   }, []);
 
   const handlePointerUp = useCallback(() => {
     setIsDragging(false);
   }, []);
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (isDragging) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
 
   useEffect(() => {
     window.addEventListener("wheel", handleWheel);
@@ -74,54 +80,67 @@ export default function InfiniteCarousel({ children }: InfiniteCarouselProps) {
     };
   }, [handleWheel, handlePointerDown, handlePointerMove, handlePointerUp]);
 
-  useEffect(() => {
-    if (childrenWidth > 0) {
-      setDuplicates(Math.ceil(windowWidth / childrenWidth) + 1);
-    }
-  }, [windowWidth, childrenWidth]);
-
-  const duplicatedChildren = useMemo(() => {
-    let duplicatesArray = [];
-    for (let i = 0; i < duplicates; i++) {
-      duplicatesArray.push(...children);
-    }
-    return duplicatesArray;
-  }, [children, duplicates]);
-
-  const handleClick = (e: React.MouseEvent) => {
-    if (isDragging) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  };
-
-  if (childrenWidth === 0) {
-    return (
-      <div className="invisible">
-        <MeasureWidth
-          onWidthChange={(width) => {
-            setChildrenWidth(width + children.length * CAROUSEL_GAP);
-            setDuplicates(Math.ceil(windowWidth / width) + 1);
-          }}
-        >
-          {children}
-        </MeasureWidth>
-      </div>
-    );
-  }
-
   return (
-    <div className="overflow-hidden whitespace-nowrap select-none py-4 animate-move-in">
-      <motion.div
-        className="inline-flex items-center"
-        style={{ x: loopX, gap: CAROUSEL_GAP }}
-      >
-        {duplicatedChildren.map((child, index) => (
-          <div key={index} className="shrink-0" onClick={handleClick}>
+    <div className="relative overflow-hidden flex-1" ref={ref}>
+      {Children.map(children, (child, index) => {
+        const childAngle = index * angleStep;
+        return (
+          <Card
+            initAngle={childAngle}
+            containerSize={{ width, height }}
+            r={rotation}
+            onClick={handleClick}
+          >
             {child}
-          </div>
-        ))}
-      </motion.div>
+          </Card>
+        );
+      })}
     </div>
   );
+};
+
+function Card({
+  r,
+  initAngle,
+  containerSize,
+  children,
+  onClick,
+}: {
+  r: MotionValue;
+  initAngle: number;
+  containerSize: { width: number; height: number };
+  children: ReactNode;
+  onClick: (e: React.MouseEvent) => void;
+}) {
+  const { width, height } = containerSize;
+
+  const x = useTransform(
+    r,
+    (value) => (width / 2) * Math.cos(degToRag(value + initAngle)) + width,
+  );
+  const y = useTransform(
+    r,
+    (value) =>
+      (height / 2) * Math.sin(degToRag(value + initAngle)) + height / 2,
+  );
+
+  const xFormatted = useMotionTemplate`calc(${x}px - 50%)`;
+  const yFormatted = useMotionTemplate`calc(${y}px - 50%)`;
+
+  return (
+    <motion.div
+      onClick={onClick}
+      className="absolute"
+      style={{
+        x: xFormatted,
+        y: yFormatted,
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function degToRag(deg: number) {
+  return (deg * Math.PI) / 180;
 }

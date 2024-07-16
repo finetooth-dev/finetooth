@@ -1,48 +1,32 @@
-import InfiniteCarousel from "@/components/InfiniteCarousel";
-import { cn } from "@/lib/cn";
-import Link from "next/link";
-import { ReactNode } from "react";
+import CarouselCard from "@/components/CarouselCard";
+import { Carousel } from "@/components/InfiniteCarousel";
 
 export default function Home() {
   return (
-    <main className="flex-1 flex flex-col justify-center">
-      <InfiniteCarousel>
-        <LinkItem href="/" className="w-64 h-64 rounded p-2 bg-gray-500">
+    <main className="flex-1 flex flex-col">
+      <Carousel>
+        <CarouselCard href="/" className="w-64 h-64 rounded">
           Item 1
-        </LinkItem>
-        <LinkItem href="/" className="w-48 h-80 rounded p-2 bg-gray-500">
+        </CarouselCard>
+        <CarouselCard href="/" className="w-48 h-80 rounded">
           Item 2
-        </LinkItem>
-        <LinkItem href="/" className="w-80 h-48 rounded p-2 bg-gray-500">
+        </CarouselCard>
+        <CarouselCard href="/" className="w-80 h-48 rounded">
           Item 3
-        </LinkItem>
-        <LinkItem href="/" className="w-80 h-80 rounded p-2 bg-gray-500">
+        </CarouselCard>
+        <CarouselCard href="/" className="w-80 h-80 rounded">
           Item 4
-        </LinkItem>
-      </InfiniteCarousel>
+        </CarouselCard>
+        <CarouselCard href="/" className="w-64 h-64 rounded">
+          Item 5
+        </CarouselCard>
+        <CarouselCard href="/" className="w-48 h-80 rounded">
+          Item 6
+        </CarouselCard>
+        <CarouselCard href="/" className="w-80 h-48 rounded">
+          Item 7
+        </CarouselCard>
+      </Carousel>
     </main>
-  );
-}
-
-function LinkItem({
-  href,
-  children,
-  className,
-}: {
-  href: string;
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        className,
-        "block ring-gray-600 focus:outline-none focus-visible:ring",
-      )}
-      draggable={false}
-    >
-      {children}
-    </Link>
   );
 }
