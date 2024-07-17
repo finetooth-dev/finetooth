@@ -15,8 +15,8 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="bg-gray-400 text-gray-950">
-      <body className="flex flex-col sans-serif min-h-svh overscroll-none">
-        <header className="flex px-3 py-2 justify-between">
+      <body className="flex sans-serif min-h-svh overscroll-none">
+        <header className="flex flex-col px-3 py-2 justify-between">
           <Link
             href="/"
             className="self-center hover:underline focus:underline focus:outline-none"
