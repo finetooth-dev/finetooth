@@ -41,7 +41,7 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
   const rSpring = useSpring(rotation, { stiffness: 300, damping: 40 });
 
   const handleWheel = (e: WheelEvent) => {
-    rotation.set(rotation.get() + e.deltaY * 0.1);
+    rotation.set(rotation.get() + e.deltaY * 0.05);
   };
 
   const handlePointerDown = useCallback((event: PointerEvent) => {

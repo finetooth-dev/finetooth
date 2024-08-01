@@ -15,7 +15,7 @@ export default function GlassCard({
     <Link
       href={href}
       className={cn(
-        "relative block rounded p-1 pt-[2px] w-80 max-w-screen flex flex-col gap-[2px] aspect-[4/5] bg-gradient-to-b from-gray-100/40 to-gray-200/40 shadow-lg backdrop-blur-md border border-gray-200 hd:border-[0.5px] ring-gray-600 focus:outline-none focus-visible:ring",
+        "relative block rounded p-1 pt-[2px] w-80 max-w-screen flex flex-col gap-[2px] aspect-[4/5] bg-gradient-to-b from-gray-100/40 to-gray-200/40 shadow-lg border border-gray-200 hd:border-[0.5px] ring-gray-600 focus:outline-none focus-visible:ring",
         className,
       )}
       draggable={false}
