@@ -17,15 +17,6 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
     const modalBackground = document.getElementById("modalBackground");
     const modalItself = document.getElementById("modalItself");
 
-    if (project.imageList && featuredImagesRef.current) {
-      for (let image of project.imageList) {
-        const imgElement = document.createElement("img");
-        imgElement.src = image;
-        imgElement.classList.add("rounded");
-        featuredImagesRef.current.appendChild(imgElement);
-      }
-    }
-
     if (modalBackground && modalItself) {
       const handleMouseMove = (e: MouseEvent) => {
         const rect = modalItself.getBoundingClientRect();
@@ -152,12 +143,7 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
             borderRadius: "inherit",
           }}
         >
-          <div
-            className="content-column flex flex-col p-3 backdrop-blur-xl gap-4 overflow-hidden"
-            style={{
-              borderRadius: "inherit",
-            }}
-          >
+          <div className="content-column flex flex-col p-3 backdrop-blur-xl gap-4 overflow-hidden">
             <span className="w-full flex flex-row justify-between">
               <div>{project.client}</div>
               <div>{project.year}</div>
@@ -166,24 +152,18 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
               id="featured-imgs"
               className="flex flex-col gap-4"
               ref={featuredImagesRef}
-            ></div>
+            >
+              {project.imageList.map((image, index) => (
+                <img key={index} src={image} alt="" className="rounded" />
+              ))}
+            </div>
           </div>
-          <div
-            className="content-column flex flex-col p-3 backdrop-blur-md gap-4 overflow-hidden"
-            style={{
-              borderRadius: "inherit",
-            }}
-          >
+          <div className="content-column flex flex-col p-3 backdrop-blur-md gap-4 overflow-hidden">
             <div>{project.category}</div>
 
             <div style={{ whiteSpace: "pre-line" }}>{project.col1}</div>
           </div>
-          <div
-            className="content-column flex flex-col p-3 backdrop-blur-lg gap-4 overflow-hidden"
-            style={{
-              borderRadius: "inherit",
-            }}
-          >
+          <div className="content-column flex flex-col p-3 backdrop-blur-lg gap-4 overflow-hidden">
             <div>{project.role}</div>
             <div style={{ whiteSpace: "pre-line" }}>{project.col2}</div>
           </div>

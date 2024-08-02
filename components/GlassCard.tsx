@@ -6,10 +6,12 @@ export default function GlassCard({
   href,
   children,
   className,
+  title,
 }: {
   href: string;
   children: ReactNode;
   className?: string;
+  title?: string;
 }) {
   return (
     <Link
@@ -20,7 +22,7 @@ export default function GlassCard({
       )}
       draggable={false}
     >
-      <h2 className="text-gray-800 text-xs text-center">hello</h2>
+      <h2 className="text-gray-800 text-xs text-center">{title}</h2>
       <div className="flex-1 bg-emerald-700 rounded-sm">{children}</div>
     </Link>
   );

@@ -28,7 +28,7 @@ const projects: Array<ProjectType> = [
     year: "2023",
     category: "music distribution",
     role: "web design + development",
-    col1: "“Widely-known for its comprehensive distribution offering, including artist-development services and data-driven insights, Stem arms artists with the tools & resources needed to flourish creatively & commercially.” \n\n Featured roster \n\n 001 Mk.gee \n 002 Brent Faiyaz \n 003 Veeze \n 004 Charlotte Lawrenc\n 005 Fisher \n006 Yeek \n007 Justine Skye\n 008 Sabrina Claudio\n 009 UMI\n 010 Alexander 23",
+    col1: "“Widely-known for its comprehensive distribution offering, including artist-development services and data-driven insights, Stem arms artists with the tools & resources needed to flourish creatively & commercially.” \n\n Featured roster \n\n 001 Mk.gee \n 002 Brent Faiyaz \n 003 Veeze \n 004 Charlotte Lawrence\n 005 Fisher \n006 Yeek \n007 Justine Skye\n 008 Sabrina Claudio\n 009 UMI\n 010 Alexander 23",
     col2: "★ awwwards honorable mention",
     bgImgURL: "/images/stem-card.png",
     imageList: [
@@ -43,10 +43,10 @@ const projects: Array<ProjectType> = [
     year: "2023",
     category: "music production",
     role: "web design + development",
-    col1: "g jones website",
+    col1: "Single release website made for the album Paths by electronic artist G Jones. This website implemented the parametric grid-based visual system that pervaded all surfaces relevant to the new album and associated US tour onto the web. The adaptive UI approach taken ensured a perfect viewing experience on any device or window.",
     col2: "",
-    bgImgURL: "/images/stem-card.png",
-    imageList: [],
+    bgImgURL: "/images/paths.png",
+    imageList: ["/images/paths.gif"],
   },
 ];
 

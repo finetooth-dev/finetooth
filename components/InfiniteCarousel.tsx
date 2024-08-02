@@ -40,7 +40,7 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
   const rSpring = useSpring(rotation, { stiffness: 300, damping: 40 });
 
   const handleWheel = (e: WheelEvent) => {
-    rotation.set(rotation.get() + e.deltaY * 0.05);
+    rotation.set(rotation.get() + e.deltaY * 0.1);
   };
 
   const handlePointerDown = useCallback((event: PointerEvent) => {
@@ -86,43 +86,43 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
     };
   }, [handleWheel, handlePointerDown, handlePointerMove, handlePointerUp]);
 
-  useEffect(() => {
-    const handleWheelEnd = () => {
-      const currentRotation = rotation.get();
-      const normalizedRotation = ((currentRotation % 360) + 360) % 360;
+  // useEffect(() => {
+  //   const handleWheelEnd = () => {
+  //     const currentRotation = rotation.get();
+  //     const normalizedRotation = ((currentRotation % 360) + 360) % 360;
 
-      let closestIndex = 0;
-      let minDifference = Infinity;
+  //     let closestIndex = 0;
+  //     let minDifference = Infinity;
 
-      for (let i = 0; i < numItems; i++) {
-        const itemAngle = (i * angleStep + 180) % 360;
-        const difference = Math.abs(itemAngle - normalizedRotation);
+  //     for (let i = 0; i < numItems; i++) {
+  //       const itemAngle = (i * angleStep + 180) % 360;
+  //       const difference = Math.abs(itemAngle - normalizedRotation);
 
-        if (difference < minDifference) {
-          minDifference = difference;
-          closestIndex = i;
-        }
-      }
+  //       if (difference < minDifference) {
+  //         minDifference = difference;
+  //         closestIndex = i;
+  //       }
+  //     }
 
-      const closestItemAngle = (closestIndex * angleStep + 180) % 360;
-      const delta = closestItemAngle - normalizedRotation;
-      rotation.set(currentRotation + delta);
-    };
+  //     const closestItemAngle = (closestIndex * angleStep + 180) % 360;
+  //     const delta = closestItemAngle - normalizedRotation;
+  //     rotation.set(currentRotation + delta);
+  //   };
 
-    let timeoutId: NodeJS.Timeout;
-    const handleWheelWithTimeout = (e: WheelEvent) => {
-      handleWheel(e);
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(handleWheelEnd, 200);
-    };
+  //   let timeoutId: NodeJS.Timeout;
+  //   const handleWheelWithTimeout = (e: WheelEvent) => {
+  //     handleWheel(e);
+  //     clearTimeout(timeoutId);
+  //     timeoutId = setTimeout(handleWheelEnd, 200);
+  //   };
 
-    window.addEventListener("wheel", handleWheelWithTimeout);
+  //   window.addEventListener("wheel", handleWheelWithTimeout);
 
-    return () => {
-      window.removeEventListener("wheel", handleWheelWithTimeout);
-      clearTimeout(timeoutId);
-    };
-  }, [rotation, angleStep, numItems]);
+  //   return () => {
+  //     window.removeEventListener("wheel", handleWheelWithTimeout);
+  //     clearTimeout(timeoutId);
+  //   };
+  // }, [rotation, angleStep, numItems]);
 
   const duplicatedChildren: Array<ReactNode> = Array(duplicate)
     .fill(children)
@@ -225,7 +225,6 @@ function CarouselItem({
         opacity,
         transformStyle: "preserve-3d",
       }}
-      onFocus={() => r.set(180 - initAngle)}
     >
       {children}
     </motion.div>
