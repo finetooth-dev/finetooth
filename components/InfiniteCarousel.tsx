@@ -10,7 +10,6 @@ import {
   useMotionValueEvent,
   useSpring,
   useTransform,
-  useVelocity,
 } from "framer-motion";
 import React, {
   ReactNode,
