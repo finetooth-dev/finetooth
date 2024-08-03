@@ -18,16 +18,26 @@ export default function RootLayout({
             <body className="flex sans-serif min-h-svh overscroll-none">
                 <header
                     className="flex flex-col px-3 py-2 justify-between fixed h-full"
-                    style={{ color: "#7E7E7E" }}
+                    style={{ color: "#7E7E7E", zIndex: "1" }}
                 >
-                    <Link
-                        href="/"
-                        className="self-center hover:underline focus:underline focus:outline-none"
-                    >
-                        <h1>finetooth</h1>
-                    </Link>
+                    <div className="flex flex-col gap-4 justify-start">
+                        <Link
+                            href="/"
+                            className="hover:underline focus:underline focus:outline-none cursor-pointer"
+                        >
+                            <h1>finetooth</h1>
+                        </Link>
+                        <div></div>
+                    </div>
                     <p>c {currentYear}</p>
                 </header>
+                <div
+                    className="absolute flex flex-col top-0 right-0 px-3 py-2  h-full justify-between items-end"
+                    style={{ color: "#7E7E7E", zIndex: "1" }}
+                >
+                    <div>creative coding; web development</div>
+                    <div className="cursor-pointer">[ work with us ]</div>
+                </div>
                 {children}
             </body>
         </html>
