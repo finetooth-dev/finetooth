@@ -3,7 +3,7 @@ import "./globals.css";
 import Link from "next/link";
 import { Suspense } from "react";
 import Loading from "../components/Loading";
-import WorkWithUs from "../components/WorkWithUs";
+import WorkWithUs from "../components/workWithUs/WorkWithUs";
 
 export const metadata: Metadata = {
     title: "finetooth",
@@ -40,10 +40,10 @@ export default function RootLayout({
                 </header>
                 <div
                     className="absolute flex flex-col top-0 right-0 px-3 py-2  h-full justify-between items-end"
-                    style={{ color: "#7E7E7E", zIndex: "100" }}
+                    style={{ color: "#7E7E7E", zIndex: "10" }}
                 >
                     <div>creative coding; web development</div>
-                    <div className="cursor-pointer">[ work with us ]</div>
+                    <p>c {currentYear}</p>
                 </div>
                 <Suspense fallback={<Loading />}>{children}</Suspense>
                 <WorkWithUs />

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, Variants } from "framer-motion";
+import "./WorkWithUs.css";
 
 function WorkWithUs() {
     const [isOpen, setIsOpen] = useState(false);
