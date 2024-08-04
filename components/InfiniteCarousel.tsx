@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/cn";
 import useMeasure from "@/util/useMeasure";
+import Loading from "./Loading";
 import {
     motion,
     MotionValue,
@@ -18,6 +19,7 @@ import React, {
     FC,
     useState,
     useCallback,
+    Suspense,
 } from "react";
 
 interface CarouselProps {
@@ -57,7 +59,9 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
             setIsDragging(true);
         }
 
-        rotation.set(rotation.get() - moveDelta * 0.2);
+        const rotationChange = rotation.get() - moveDelta * 0.6;
+        console.log("Rotation change is ", rotationChange);
+        rotation.set(rotationChange);
         startY.set(event.clientY);
     }, []);
 
@@ -233,7 +237,7 @@ function CarouselItem({
             animate={{ opacity: 1 }}
             initial={{ opacity: 0 }}
         >
-            {children}
+            <Suspense fallback={<Loading />}>{children}</Suspense>
         </motion.div>
     );
 }
