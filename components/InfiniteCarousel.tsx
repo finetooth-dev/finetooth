@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/cn";
-import useMeasure from "@/util/useMeasure";
+import { cn } from '@/lib/cn';
+import useMeasure from '@/util/useMeasure';
 import {
   motion,
   MotionValue,
@@ -10,7 +10,7 @@ import {
   useMotionValueEvent,
   useSpring,
   useTransform,
-} from "framer-motion";
+} from 'framer-motion';
 import React, {
   ReactNode,
   useEffect,
@@ -18,7 +18,7 @@ import React, {
   FC,
   useState,
   useCallback,
-} from "react";
+} from 'react';
 
 interface CarouselProps {
   children: ReactNode;
@@ -73,16 +73,16 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
   };
 
   useEffect(() => {
-    window.addEventListener("wheel", handleWheel);
-    window.addEventListener("pointerdown", handlePointerDown);
-    window.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener('wheel', handleWheel);
+    window.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
 
     return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("pointerdown", handlePointerDown);
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
     };
   }, [handleWheel, handlePointerDown, handlePointerMove, handlePointerUp]);
 
@@ -150,8 +150,8 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
         : null}
       <div
         className={cn(
-          "absolute pointer-events-none inset-0  transition-opacity duration-500 z-[999]",
-          shouldRender ? "opacity-0" : "opacity-100",
+          'absolute pointer-events-none inset-0  transition-opacity duration-500 z-[999]',
+          shouldRender ? 'opacity-0' : 'opacity-100'
         )}
       />
     </div>
@@ -160,7 +160,7 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
 
 function VelocityIndicator({ rv }: { rv: MotionValue<number> }) {
   const [v, setV] = useState(0);
-  useMotionValueEvent(rv, "change", (v) => setV(Math.round(v)));
+  useMotionValueEvent(rv, 'change', (v) => setV(Math.round(v)));
 
   return <span className="text-gray-500">v={String(v)}</span>;
 }
@@ -181,18 +181,18 @@ function CarouselItem({
   const { width, height } = containerSize;
 
   const rotation = useTransform(r, (v) =>
-    v + initAngle < 0 ? ((v + initAngle) % 360) + 360 : (v + initAngle) % 360,
+    v + initAngle < 0 ? ((v + initAngle) % 360) + 360 : (v + initAngle) % 360
   );
 
   const x = useTransform(
     rotation,
-    (value) => ((width * 2) / 3) * Math.cos(degToRad(value)) + width,
+    (value) => ((width * 2) / 3) * Math.cos(degToRad(value)) + width
   );
   const xFormatted = useMotionTemplate`calc(${x}px - 50%)`;
 
   const y = useTransform(
     rotation,
-    (value) => ((height * 2) / 3) * Math.sin(degToRad(value)) + height * 0.55,
+    (value) => ((height * 2) / 3) * Math.sin(degToRad(value)) + height * 0.55
   );
   const yFormatted = useMotionTemplate`calc(${y}px - 50%)`;
 
@@ -223,7 +223,7 @@ function CarouselItem({
         rotateY,
         rotateZ,
         opacity,
-        transformStyle: "preserve-3d",
+        transformStyle: 'preserve-3d',
       }}
     >
       {children}

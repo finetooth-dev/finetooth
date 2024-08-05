@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
-import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
-import { isBrowser, noop } from "./misc";
+import { useMemo, useState } from 'react';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
+import { isBrowser, noop } from './misc';
 
 export type UseMeasureRect = Pick<
   DOMRectReadOnly,
-  "x" | "y" | "top" | "left" | "right" | "bottom" | "height" | "width"
+  'x' | 'y' | 'top' | 'left' | 'right' | 'bottom' | 'height' | 'width'
 >;
 export type UseMeasureRef<E extends Element = Element> = (element: E) => void;
 export type UseMeasureResult<E extends Element = Element> = [
@@ -36,7 +36,7 @@ function useMeasure<E extends Element = Element>(): UseMeasureResult<E> {
           setRect({ x, y, width, height, top, left, bottom, right });
         }
       }),
-    [],
+    []
   );
 
   useIsomorphicLayoutEffect(() => {
@@ -51,6 +51,6 @@ function useMeasure<E extends Element = Element>(): UseMeasureResult<E> {
 }
 
 export default isBrowser &&
-typeof (window as any).ResizeObserver !== "undefined"
+typeof (window as any).ResizeObserver !== 'undefined'
   ? useMeasure
   : ((() => [noop, defaultState]) as typeof useMeasure);
