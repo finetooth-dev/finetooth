@@ -1,5 +1,5 @@
-import projects from "@/util/projects";
-import DetailOverlay from "../../components/project/DetailOverlay";
+import projects from '@/util/projects';
+import DetailOverlay from '../../components/project/DetailOverlay';
 
 export async function generateStaticParams() {
   return projects.map((project) => ({

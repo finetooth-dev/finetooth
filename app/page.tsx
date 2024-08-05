@@ -1,6 +1,6 @@
-import GlassCard from "@/components/GlassCard";
-import { Carousel } from "@/components/InfiniteCarousel";
-import projects from "@/util/projects";
+import GlassCard from '@/components/GlassCard';
+import { Carousel } from '@/components/InfiniteCarousel';
+import projects from '@/util/projects';
 
 const repeatedProjects = [...projects, ...projects, ...projects];
 
