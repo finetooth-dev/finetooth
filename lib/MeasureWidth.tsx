@@ -1,4 +1,4 @@
-import { memo, ReactNode, useCallback, useEffect, useRef } from "react";
+import { memo, ReactNode, useCallback, useEffect, useRef } from 'react';
 
 interface MeasureWidthProps {
   children: ReactNode[];
@@ -8,7 +8,7 @@ interface MeasureWidthProps {
 const getTotalWidth = (elements: HTMLElement[]): number => {
   return elements.reduce(
     (totalWidth, element) => totalWidth + element.offsetWidth,
-    0,
+    0
   );
 };
 
@@ -21,7 +21,7 @@ const MeasureWidth = memo(function MeasureWidth({
   const measureWidth = useCallback(() => {
     if (containerRef.current) {
       const childrenArray = Array.from(
-        containerRef.current.children,
+        containerRef.current.children
       ) as HTMLElement[];
       const totalWidth = getTotalWidth(childrenArray);
       onWidthChange(totalWidth);

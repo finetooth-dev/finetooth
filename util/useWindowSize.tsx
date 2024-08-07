@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import debounce from "./debounce";
+import { useState, useEffect } from 'react';
+import debounce from './debounce';
 
 export type WindowSize = {
   width: number;
@@ -23,9 +23,9 @@ function useWindowSize() {
 
     debouncedResize();
 
-    window.addEventListener("resize", debouncedResize);
+    window.addEventListener('resize', debouncedResize);
     return () => {
-      window.removeEventListener("resize", debouncedResize);
+      window.removeEventListener('resize', debouncedResize);
     };
   }, []);
 
