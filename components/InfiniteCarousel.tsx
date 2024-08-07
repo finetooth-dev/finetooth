@@ -202,8 +202,8 @@ function CarouselItem({
 
   const zIndex = useTransform(rotation, (value) => 360 - value);
 
-  const blur = useTransform(rotation, [90, 160, 190, 270], [16, 0, 0, 8]);
-  const blurFormatted = useMotionTemplate`blur(${blur * 0.1}px)`;
+  const blur = useTransform(rotation, [90, 160, 190, 270], [1.6, 0, 0, 0.8]);
+  const blurFormatted = useMotionTemplate`blur(${blur}px)`;
 
   const scale = useTransform(rotation, [90, 180, 270], [1.2, 1, 0.7]);
 
