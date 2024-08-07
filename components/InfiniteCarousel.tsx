@@ -2,6 +2,7 @@
 
 import { cn } from '@/lib/cn';
 import useMeasure from '@/util/useMeasure';
+import Loading from './Loading';
 import {
   motion,
   MotionValue,
@@ -18,6 +19,7 @@ import React, {
   FC,
   useState,
   useCallback,
+  Suspense,
 } from 'react';
 
 interface CarouselProps {
@@ -57,7 +59,9 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
       setIsDragging(true);
     }
 
-    rotation.set(rotation.get() - moveDelta * 0.2);
+    const rotationChange = rotation.get() - moveDelta * 0.6;
+    console.log('Rotation change is ', rotationChange);
+    rotation.set(rotationChange);
     startY.set(event.clientY);
   }, []);
 
@@ -198,12 +202,15 @@ function CarouselItem({
 
   const zIndex = useTransform(rotation, (value) => 360 - value);
 
-  const blur = useTransform(rotation, [90, 160, 190, 270], [16, 0, 0, 8]);
+  const blur = useTransform(rotation, [90, 160, 190, 270], [1.6, 0, 0, 0.8]);
   const blurFormatted = useMotionTemplate`blur(${blur}px)`;
 
   const scale = useTransform(rotation, [90, 180, 270], [1.2, 1, 0.7]);
-  const rotateY = useTransform(rotation, [90, 180, 270], [90, 0, 60]);
-  const rotateZ = useTransform(rotation, [90, 180, 270], [-10, 0, 30]);
+
+  // removed rotation for now; thought it cheapened the animation a bit.
+  // maybe there's a happy medium
+  // const rotateY = useTransform(rotation, [90, 180, 270], [90, 0, 60]);
+  // const rotateZ = useTransform(rotation, [90, 180, 270], [-10, 0, 30]);
   const opacity = useTransform(rotation, [90, 130, 210, 270], [0, 1, 1, 0]);
 
   // useMotionValueEvent(rotation, "change", (v) =>
@@ -220,13 +227,14 @@ function CarouselItem({
         zIndex,
         scale,
         filter: blurFormatted,
-        rotateY,
-        rotateZ,
+
         opacity,
         transformStyle: 'preserve-3d',
       }}
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
     >
-      {children}
+      <Suspense fallback={<Loading />}>{children}</Suspense>
     </motion.div>
   );
 }

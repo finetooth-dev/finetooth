@@ -6,7 +6,7 @@ const repeatedProjects = [...projects, ...projects, ...projects];
 
 export default function Home() {
   return (
-    <main className="flex-1 flex flex-col">
+    <main className="flex-1 flex flex-col z-10">
       <Carousel>
         {repeatedProjects.map((project, index) => (
           <GlassCard href={project.slug} key={index} title={project.client}>
