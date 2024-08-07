@@ -227,6 +227,7 @@ function CarouselItem({
         zIndex,
         scale,
         filter: blurFormatted,
+        backdropFilter: 'blur(10px)',
 
         opacity,
         transformStyle: 'preserve-3d',
