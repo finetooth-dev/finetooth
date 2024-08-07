@@ -163,7 +163,10 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
 
             <div style={{ whiteSpace: 'pre-line' }}>{project.col1}</div>
           </div>
-          <div className="content-column flex flex-col p-3 backdrop-blur-lg gap-4 overflow-hidden">
+          <div
+            data-name="last-content-column"
+            className="content-column flex flex-col p-3 backdrop-blur-lg gap-4 overflow-hidden"
+          >
             <span className="w-full flex flex-row justify-between">
               <div>{project.role}</div>
               <div>

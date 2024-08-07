@@ -11,7 +11,7 @@ export default function Home() {
         {repeatedProjects.map((project, index) => (
           <GlassCard href={project.slug} key={index} title={project.client}>
             <img
-              src={project.bgImgURL}
+              src={project.chipImgURL ? project.chipImgURL : project.bgImgURL}
               alt={project.col1}
               className="min-w-full min-h-full object-cover"
             />
