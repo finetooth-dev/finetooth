@@ -30,7 +30,10 @@ function WorkWithUs() {
   };
 
   return (
-    <div className="flex justify-center fixed bottom-0 w-full z-20">
+    <div
+      onClick={handleTap}
+      className="flex justify-center fixed bottom-0 w-full z-20"
+    >
       <motion.div
         className="self-center py-2 px-10 backdrop-blur-md overflow-hidden"
         id="work-with-us"
@@ -38,7 +41,7 @@ function WorkWithUs() {
         animate={isOpen ? 'open' : 'closed'}
         onMouseEnter={handleHover}
         onMouseLeave={handleMouseLeave}
-        onClick={handleTap}
+        // onClick={handleTap}
         variants={itemVariants}
         style={{
           background: 'rgba(253, 253, 253, 0.52)',
