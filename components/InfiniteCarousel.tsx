@@ -39,7 +39,7 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
   const rotation = useMotionValue(0);
   const startY = useMotionValue(0);
 
-  const rSpring = useSpring(rotation, { stiffness: 300, damping: 40 });
+  const rSpring = useSpring(rotation, { stiffness: 100, damping: 50 });
 
   const handleWheel = (e: WheelEvent) => {
     rotation.set(rotation.get() + e.deltaY * 0.1);
@@ -59,7 +59,7 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
       setIsDragging(true);
     }
 
-    const rotationChange = rotation.get() - moveDelta * 0.2;
+    const rotationChange = rotation.get() - moveDelta * 0.3;
     // console.log('Rotation change is ', rotationChange);
     rotation.set(rotationChange);
     startY.set(event.clientY);
