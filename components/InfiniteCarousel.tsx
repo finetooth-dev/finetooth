@@ -59,8 +59,8 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
       setIsDragging(true);
     }
 
-    const rotationChange = rotation.get() - moveDelta * 0.6;
-    console.log('Rotation change is ', rotationChange);
+    const rotationChange = rotation.get() - moveDelta * 0.2;
+    // console.log('Rotation change is ', rotationChange);
     rotation.set(rotationChange);
     startY.set(event.clientY);
   }, []);
@@ -76,19 +76,57 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
     }
   };
 
+  // For safari mobile
+  const handleTouchStart = useCallback((event: TouchEvent) => {
+    setIsDragging(false);
+    startY.set(event.touches[0].clientY);
+  }, []);
+
+  const handleTouchMove = useCallback((event: TouchEvent) => {
+    if (event.touches.length !== 1) return;
+
+    const moveDelta = event.touches[0].clientY - startY.get();
+
+    if (Math.abs(moveDelta) > DRAG_THRESHOLD) {
+      setIsDragging(true);
+    }
+
+    const rotationChange = rotation.get() - moveDelta * 0.15;
+    rotation.set(rotationChange);
+    startY.set(event.touches[0].clientY);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
   useEffect(() => {
     window.addEventListener('wheel', handleWheel);
     window.addEventListener('pointerdown', handlePointerDown);
     window.addEventListener('pointermove', handlePointerMove);
     window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
 
     return () => {
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [handleWheel, handlePointerDown, handlePointerMove, handlePointerUp]);
+  }, [
+    handleWheel,
+    handlePointerDown,
+    handlePointerMove,
+    handlePointerUp,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+  ]);
 
   // useEffect(() => {
   //   const handleWheelEnd = () => {
