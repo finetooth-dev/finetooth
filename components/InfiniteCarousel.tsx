@@ -220,14 +220,13 @@ function CarouselItem({
   return (
     <motion.div
       onClick={onClick}
-      className="absolute"
+      className="absolute backdrop-blur-md"
       style={{
         x: xFormatted,
         y: yFormatted,
         zIndex,
         scale,
         filter: blurFormatted,
-        backdropFilter: 'blur(10px)',
 
         opacity,
         transformStyle: 'preserve-3d',
