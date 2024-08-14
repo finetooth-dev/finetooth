@@ -8,7 +8,6 @@ import {
   MotionValue,
   useMotionTemplate,
   useMotionValue,
-  useMotionValueEvent,
   useSpring,
   useTransform,
 } from 'framer-motion';
@@ -60,7 +59,6 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
     }
 
     const rotationChange = rotation.get() - moveDelta * 0.3;
-    // console.log('Rotation change is ', rotationChange);
     rotation.set(rotationChange);
     startY.set(event.clientY);
   }, []);
@@ -128,44 +126,6 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
     handleTouchEnd,
   ]);
 
-  // useEffect(() => {
-  //   const handleWheelEnd = () => {
-  //     const currentRotation = rotation.get();
-  //     const normalizedRotation = ((currentRotation % 360) + 360) % 360;
-
-  //     let closestIndex = 0;
-  //     let minDifference = Infinity;
-
-  //     for (let i = 0; i < numItems; i++) {
-  //       const itemAngle = (i * angleStep + 180) % 360;
-  //       const difference = Math.abs(itemAngle - normalizedRotation);
-
-  //       if (difference < minDifference) {
-  //         minDifference = difference;
-  //         closestIndex = i;
-  //       }
-  //     }
-
-  //     const closestItemAngle = (closestIndex * angleStep + 180) % 360;
-  //     const delta = closestItemAngle - normalizedRotation;
-  //     rotation.set(currentRotation + delta);
-  //   };
-
-  //   let timeoutId: NodeJS.Timeout;
-  //   const handleWheelWithTimeout = (e: WheelEvent) => {
-  //     handleWheel(e);
-  //     clearTimeout(timeoutId);
-  //     timeoutId = setTimeout(handleWheelEnd, 200);
-  //   };
-
-  //   window.addEventListener("wheel", handleWheelWithTimeout);
-
-  //   return () => {
-  //     window.removeEventListener("wheel", handleWheelWithTimeout);
-  //     clearTimeout(timeoutId);
-  //   };
-  // }, [rotation, angleStep, numItems]);
-
   const duplicatedChildren: Array<ReactNode> = Array(duplicate)
     .fill(children)
     .reduce((acc, curr) => [...acc, ...curr], []);
@@ -199,13 +159,6 @@ export const Carousel: FC<CarouselProps> = ({ children, duplicate = 1 }) => {
     </div>
   );
 };
-
-function VelocityIndicator({ rv }: { rv: MotionValue<number> }) {
-  const [v, setV] = useState(0);
-  useMotionValueEvent(rv, 'change', (v) => setV(Math.round(v)));
-
-  return <span className="text-gray-500">v={String(v)}</span>;
-}
 
 function CarouselItem({
   r,
@@ -244,16 +197,7 @@ function CarouselItem({
   const blurFormatted = useMotionTemplate`blur(${blur}px)`;
 
   const scale = useTransform(rotation, [90, 180, 270], [1.2, 1, 0.7]);
-
-  // removed rotation for now; thought it cheapened the animation a bit.
-  // maybe there's a happy medium
-  // const rotateY = useTransform(rotation, [90, 180, 270], [90, 0, 60]);
-  // const rotateZ = useTransform(rotation, [90, 180, 270], [-10, 0, 30]);
   const opacity = useTransform(rotation, [90, 130, 210, 270], [0, 1, 1, 0]);
-
-  // useMotionValueEvent(rotation, "change", (v) =>
-  //     initAngle === 0 ? console.log(v) : null
-  // );
 
   return (
     <motion.div
