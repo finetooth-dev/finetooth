@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import './DetailOverlay.css';
 import projects, { ProjectType } from '@/util/projects';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface DetailOverlayProps {
   project: ProjectType;
@@ -130,10 +131,10 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
           id="modalBackground"
           className=" absolute z-0 t-0 overflow-visible"
         >
-          <img
+          <Image
             className="w-full h-full object-cover"
             src={project.bgImgURL}
-            alt="Background"
+            alt=""
           />
         </div>
 
@@ -154,7 +155,7 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
               ref={featuredImagesRef}
             >
               {project.imageList.map((image, index) => (
-                <img key={index} src={image} alt="" className="rounded" />
+                <Image key={index} src={image} alt="" className="rounded" />
               ))}
             </div>
           </div>
