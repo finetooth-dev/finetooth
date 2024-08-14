@@ -15,7 +15,6 @@ export default function Home() {
               src={project.chipImgURL ? project.chipImgURL : project.bgImgURL}
               alt={project.col1}
               className="min-w-full min-h-full object-cover"
-              priority
             />
           </GlassCard>
         ))}

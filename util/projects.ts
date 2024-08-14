@@ -1,19 +1,17 @@
-import {
-  savage3,
-  savage4,
-  savage,
-  disc,
-  gif33fps,
-  pathsGif,
-  pathsPng,
-  petriDish,
-  rrMob,
-  seijiTrimmed,
-  seijiDemo,
-  stemCard,
-  stem1,
-  stem2,
-} from '@/images';
+import savage3 from '@/images/21-savage-3.webp';
+import savage4 from '@/images/21-savage-4.webp';
+import savage from '@/images/21-savage.webp';
+import disc from '@/images/disc.png';
+import gif33fps from '@/images/gif33fps.gif';
+import pathsGif from '@/images/paths.gif';
+import pathsPng from '@/images/paths.png';
+import petriDish from '@/images/petri_dish.png';
+import rrMob from '@/images/rr_mob.gif';
+import seijiTrimmed from '@/images/seiji_trimmed.gif';
+import seijiDemo from '@/images/seiji-demo.png';
+import stemCard from '@/images/stem-card.png';
+import stem1 from '@/images/stem1.gif';
+import stem2 from '@/images/stem2.gif';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 export type ProjectType = {
