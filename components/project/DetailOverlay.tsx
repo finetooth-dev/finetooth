@@ -98,7 +98,7 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
   return (
     <motion.div
       key="modal"
-      className="modal-overlay overflow-hidden z-10 fixed inset-0 w-full h-full flex items-center justify-start block rounded p-[2px] pt-[2px] w-80 max-w-screen flex flex-col gap-[2px] bg-gradient-to-b from-gray-100/40 to-gray-200/40 shadow-xl border border-gray-200 hd:border-[0.5px] ring-gray-600 focus:outline-none focus-visible:ring backdrop-blur"
+      className="modal-overlay overflow-hidden z-40 fixed inset-0 w-full h-full flex items-center justify-start block rounded p-[2px] pt-[2px] w-80 max-w-screen flex flex-col gap-[2px] bg-gradient-to-b from-gray-100/40 to-gray-200/40 shadow-xl border border-gray-200 hd:border-[0.5px] ring-gray-600 focus:outline-none focus-visible:ring backdrop-blur"
       style={{
         width: 'auto',
         height: 'auto',
@@ -109,21 +109,31 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
       id="modalItself"
     >
       <div className="p-1 nav-bar w-full flex justify-between text-sm text-color-blue">
-        <Link className="cursor-pointer" href="/">
+        <Link className="cursor-pointer hover:opacity-60 transition" href="/">
           [ close ]
         </Link>
         <div className="nav-buttons flex flex-row gap-4 color-[#676C6D]">
-          <Link href={projects[prevIndex].slug} data-name="prev-button">
+          <Link
+            className="hover:opacity-60 transition"
+            href={projects[prevIndex].slug}
+            data-name="prev-button"
+          >
             previous ]
           </Link>
-          <Link href={projects[nextIndex].slug} data-name="next-button">
+          <Link
+            className="hover:opacity-60 transtion"
+            href={projects[nextIndex].slug}
+            data-name="next-button "
+          >
             [ next
           </Link>
         </div>
       </div>
       <div
         data-name="modal-content"
-        className="w-full h-full rounded flex flex-row relative overflow-hidden"
+        className={`w-full h-full rounded flex flex-row relative overflow-hidden ${
+          project.textTheme === 'dark' ? 'text-neutral-700' : 'text-neutral-100'
+        }`}
       >
         <div
           data-name="background-vid"

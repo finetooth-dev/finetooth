@@ -258,19 +258,25 @@ function CarouselItem({
   return (
     <motion.div
       onClick={onClick}
-      className="absolute backdrop-blur-md"
+      className="absolute backdrop-blur-md carousel-thumbnail"
       style={{
         x: xFormatted,
         y: yFormatted,
         zIndex,
         scale,
         filter: blurFormatted,
-
         opacity,
         transformStyle: 'preserve-3d',
       }}
-      animate={{ opacity: 1 }}
+      animate={{
+        opacity: 1,
+        transition: {
+          duration: 2,
+          delay: 0.2,
+        },
+      }}
       initial={{ opacity: 0 }}
+      whileTap={{ opacity: 0.8 }}
     >
       <Suspense fallback={<Loading />}>{children}</Suspense>
     </motion.div>
