@@ -13,6 +13,13 @@ html {
   font-family: 'jura', sans-serif;
   font-size: 14px;
   text-transform: lowercase;
-  color: #7e7e7e;
+
   line-height: 100%;
+}
+
+.carousel-thumbnail:hover {
+  opacity: 0.8 !important;
+  transition: opacity 0.3s ease-in-out;
+  outline: 1px solid white;
+  border-radius: 0.25rem;
 }

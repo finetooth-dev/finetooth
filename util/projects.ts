@@ -10,6 +10,7 @@ export type ProjectType = {
   chipImgURL: string;
   link: string;
   imageList: string[];
+  textTheme: string;
 };
 
 const projects: Array<ProjectType> = [
@@ -25,6 +26,7 @@ const projects: Array<ProjectType> = [
     chipImgURL: '',
     imageList: ['/images/gif33fps.gif'],
     link: 'https://daniellaner.com/',
+    textTheme: 'light',
   },
   {
     slug: 'seiji-oda',
@@ -38,6 +40,7 @@ const projects: Array<ProjectType> = [
     chipImgURL: '/images/seiji_trimmed.gif',
     imageList: ['/images/seiji_trimmed.gif', '/images/seiji-demo.png'],
     link: '',
+    textTheme: 'light',
   },
   {
     slug: 'stem',
@@ -51,6 +54,7 @@ const projects: Array<ProjectType> = [
     chipImgURL: '',
     imageList: ['/images/stem2.gif', '/images/stem1.gif'],
     link: 'https://stem.is/',
+    textTheme: 'light',
   },
   {
     slug: 'g-jones',
@@ -63,7 +67,8 @@ const projects: Array<ProjectType> = [
     bgImgURL: '/images/paths.gif',
     chipImgURL: '',
     imageList: ['/images/paths.png'],
-    link: '',
+    link: 'archived',
+    textTheme: 'light',
   },
   {
     slug: 'ruby-red',
@@ -77,8 +82,8 @@ const projects: Array<ProjectType> = [
     chipImgURL: '/images/disc.png',
     imageList: ['/images/petri_dish.png'],
     link: '',
+    textTheme: 'dark',
   },
-
   {
     slug: '21-savage',
     client: '21 savage',
@@ -95,6 +100,7 @@ const projects: Array<ProjectType> = [
       '/images/21-savage-4.webp',
     ],
     link: '',
+    textTheme: 'light',
   },
 ];
 

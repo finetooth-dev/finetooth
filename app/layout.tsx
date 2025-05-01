@@ -5,6 +5,7 @@ import { Suspense } from 'react';
 import { Jura } from 'next/font/google';
 import Loading from '../components/Loading';
 import WorkWithUs from '../components/workWithUs/WorkWithUs';
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
   title: 'finetooth',
@@ -26,34 +27,19 @@ export default function RootLayout({
     <>
       <html
         lang="en"
-        className={`${jura.className} overscroll-none`}
-        style={{ backgroundColor: '#F9F9F9' }}
+        className={`${jura.className} overscroll-none bg-neutral-50`}
       >
-        <body className="flex sans-serif h-svh overscroll-none">
-          <header
-            className="flex flex-col px-3 py-2 justify-between fixed h-full"
-            style={{ color: '#7E7E7E', zIndex: '1' }}
-          >
-            <div className="flex flex-col gap-4 justify-start">
-              <Link
-                href="/"
-                className="hover:underline focus:underline focus:outline-none cursor-pointer"
-              >
-                <h1>finetooth</h1>
-              </Link>
-              <div></div>
-            </div>
-            <p>c {currentYear}</p>
-          </header>
-          <div
-            className="absolute flex flex-col top-0 right-0 px-3 py-2  h-full justify-between items-end"
-            style={{ color: '#7E7E7E', zIndex: '10' }}
-          >
-            <div>creative coding; web development</div>
+        <body className="flex sans-serif h-svh overscroll-none text-neutral-400">
+          {/* Header */}
+          <Header />
+
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+
+          {/* Footer */}
+          <div className="absolute flex flex-row bottom-0 right-0 z-20 w-full px-3 py-2">
             <p>c {currentYear}</p>
           </div>
-          <Suspense fallback={<Loading />}>{children}</Suspense>
-          <WorkWithUs />
+          {/* <WorkWithUs /> */}
         </body>
       </html>
     </>

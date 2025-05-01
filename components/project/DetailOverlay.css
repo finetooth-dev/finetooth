@@ -1,5 +1,5 @@
 [data-name='modal-content'] {
-  color: rgba(255, 255, 255, 0.697);
+  /* color: rgba(255, 255, 255, 0.697); */
   align-items: center;
   justify-content: center;
 }
@@ -50,6 +50,7 @@
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 4fr 1fr;
     overflow-y: scroll;
+    overscroll-behavior: none;
   }
 
   .content-column {
