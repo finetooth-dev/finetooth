@@ -112,7 +112,7 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
         <Link className="cursor-pointer hover:opacity-60 transition" href="/">
           [ close ]
         </Link>
-        <div className="nav-buttons flex flex-row gap-4 color-[#676C6D]">
+        {/* <div className="nav-buttons flex flex-row gap-4 color-[#676C6D]">
           <Link
             className="hover:opacity-60 transition"
             href={projects[prevIndex].slug}
@@ -127,7 +127,7 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
           >
             [ next
           </Link>
-        </div>
+        </div> */}
       </div>
       <div
         data-name="modal-content"
@@ -186,6 +186,27 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
               </div>
             </span>
             <div style={{ whiteSpace: 'pre-line' }}>{project.col2}</div>
+          </div>
+        </div>
+        <div className="px-2 py-1 w-full bg-orange-600 flex absolute bottom-0 justify-between text-sm text-color-blue">
+          <div className="cursor-pointer hover:opacity-60 transition" href="/">
+            &nbsp;
+          </div>
+          <div className="nav-buttons flex flex-row gap-4 color-[#676C6D]">
+            <Link
+              className="hover:opacity-60 transition"
+              href={projects[prevIndex].slug}
+              data-name="prev-button"
+            >
+              previous ]
+            </Link>
+            <Link
+              className="hover:opacity-60 transtion"
+              href={projects[nextIndex].slug}
+              data-name="next-button "
+            >
+              [ next
+            </Link>
           </div>
         </div>
       </div>
