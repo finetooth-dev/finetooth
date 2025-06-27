@@ -189,7 +189,7 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
           </div>
         </div>
         <div className="px-2 py-1 w-full bg-orange-600 flex absolute bottom-0 justify-between text-sm text-color-blue">
-          <div className="cursor-pointer hover:opacity-60 transition" href="/">
+          <div className="cursor-pointer hover:opacity-60 transition">
             &nbsp;
           </div>
           <div className="nav-buttons flex flex-row gap-4 color-[#676C6D]">
