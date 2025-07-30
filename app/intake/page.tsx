@@ -127,7 +127,7 @@ const Form: React.FC = () => {
       'bot-field': '',
     };
 
-    fetch('__forms.html', {
+    await fetch('/__forms.html', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
