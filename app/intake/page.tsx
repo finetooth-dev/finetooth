@@ -127,9 +127,12 @@ const Form: React.FC = () => {
       'bot-field': '',
     };
 
-    fetch('/', {
+    fetch('__forms.html', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Form-Submission-Debug': 'true',
+      },
       body: encode(payload),
     })
       .then(() => {
