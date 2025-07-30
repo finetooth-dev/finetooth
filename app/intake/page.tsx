@@ -127,7 +127,7 @@ const Form: React.FC = () => {
       'bot-field': '',
     };
 
-    await fetch('/__forms.html', {
+    await fetch('/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -152,9 +152,9 @@ const Form: React.FC = () => {
       setErrorMessage('');
       setTimeout(() => {
         setErrorMessage('Success');
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.href = '/';
+        // }, 1000);
       }, 1000);
     }, 500);
   };
