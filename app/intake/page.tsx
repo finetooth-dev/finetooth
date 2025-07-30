@@ -115,7 +115,7 @@ const Form: React.FC = () => {
       .join('&');
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const payload = {
       'form-name': 'client-intake',
       name: formData.name,
@@ -126,7 +126,7 @@ const Form: React.FC = () => {
       additionalInfo: formData.longAnswer,
     };
 
-    fetch('/__forms.html', {
+    await fetch('/__forms.html', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode(payload),
