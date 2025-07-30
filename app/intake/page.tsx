@@ -135,8 +135,10 @@ const Form: React.FC = () => {
       },
       body: encode(payload),
     })
-      .then(() => {
+      .then(async (res) => {
         console.log('Form submitted');
+        const text = await res.text();
+        console.log('Netlify response:', text);
         // Optionally redirect or show success
       })
       .catch((error) => {
