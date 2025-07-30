@@ -126,7 +126,7 @@ const Form: React.FC = () => {
       additionalInfo: formData.longAnswer,
     };
 
-    await fetch('/__forms.html', {
+    fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode(payload),
