@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Link from 'next/link';
 import { Suspense } from 'react';
 import { Jura } from 'next/font/google';
 import Loading from '../components/Loading';

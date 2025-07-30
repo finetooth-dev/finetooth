@@ -40,7 +40,7 @@ const Header = () => {
           }`}
           initial={false}
           animate={{
-            height: isInfoVisible ? '50svh' : 0,
+            height: isInfoVisible ? '25svh' : 0,
             opacity: isInfoVisible ? 1 : 0,
           }}
           transition={{ duration: 0.6 }}
