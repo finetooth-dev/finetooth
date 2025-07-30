@@ -124,6 +124,7 @@ const Form: React.FC = () => {
       timelineAndBudget: formData.timelineAndBudget,
       email: formData.email,
       additionalInfo: formData.longAnswer,
+      'bot-field': '',
     };
 
     fetch('/', {
@@ -247,9 +248,6 @@ const Form: React.FC = () => {
   return (
     <form
       name="client-intake"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
       onSubmit={(e) => {
         e.preventDefault();
         handleSubmit();
