@@ -63,7 +63,7 @@ const Question: React.FC<QuestionProps> = ({
                     : [...(value as string[]), option]
                 )
               }
-              className={`py-2 px-4 border rounded hover:opacity-60 transition ${
+              className={`py-2 px-4 border rounded transition ${
                 value.includes(option)
                   ? 'bg-blue-300 text-blue-500'
                   : 'bg-white text-gray-700'
@@ -145,6 +145,7 @@ const Form: React.FC = () => {
 
       if (res.status === 200) {
         setStatus('ok');
+        setTimeout(() => window.location.replace('/'), 3000);
       } else {
         setStatus('error');
         setErrorMessage(`${res.status} ${res.statusText}`);
@@ -263,7 +264,7 @@ const Form: React.FC = () => {
       <input type="hidden" name="bot-field" />
 
       {/* Main UI */}
-      <div className="w-full p-4 sm:w-[24rem] mx-auto mt-10 flex items-center justify-center flex-col gap-2 relative">
+      <div className="w-full mx-auto mt-10 flex items-center justify-center flex-col gap-2 relative">
         <div className="mt-4 text-xs w-full text-gray-300">
           {currentStep + 1}/{questions.length}
         </div>
@@ -318,20 +319,17 @@ const Form: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.5 }}
-            className="w-full z-40 p-2 bg text-center shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05)] border border-white backdrop-blur-[4px] rounded absolute w-full bottom-0 sm:bottom-64"
-            style={{
-              background:
-                'linear-gradient(45deg, transparent,rgba(237, 237, 237, 0.24))',
-            }}
+            className="w-full z-40 p-4 absolute w-full bottom-0 sm:bottom-8"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
+            <div
+              style={{
+                background:
+                  'linear-gradient(45deg, transparent,rgba(237, 237, 237, 0.24))',
+              }}
+              className="w-full p-2 text-center shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05)] border border-white backdrop-blur-[4px] rounded"
             >
               submitting...{' '}
-            </motion.div>
+            </div>
           </motion.div>
         )}
 
@@ -342,20 +340,17 @@ const Form: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.5 }}
-            className="w-full z-40 p-2 bg text-center shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05)] border border-white backdrop-blur-[4px] rounded absolute w-full bottom-0 sm:bottom-64"
-            style={{
-              background:
-                'linear-gradient(45deg, transparent,rgba(237, 237, 237, 0.24))',
-            }}
+            className="w-full z-40 p-4 absolute w-full bottom-0 sm:bottom-8"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
+            <div
+              style={{
+                background:
+                  'linear-gradient(45deg, transparent,rgba(237, 237, 237, 0.24))',
+              }}
+              className="w-full p-2 text-center shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05)] border border-white backdrop-blur-[4px] rounded"
             >
-              success!{' '}
-            </motion.div>
+              success! redirecting...{' '}
+            </div>
           </motion.div>
         )}
 
@@ -366,20 +361,17 @@ const Form: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.5 }}
-            className="w-full z-40 p-2 bg text-center text-white shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05)] border border-white backdrop-blur-[4px] rounded absolute w-full bottom-0 sm:bottom-64"
-            style={{
-              background:
-                'linear-gradient(45deg, transparent,rgba(255, 0, 0, 0.24))',
-            }}
+            className="w-full z-40 p-4 absolute w-full bottom-0 sm:bottom-8"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
+            <div
+              style={{
+                background:
+                  'linear-gradient(45deg, transparent,rgba(255, 0, 0, 1))',
+              }}
+              className="w-full p-2 text-center text-white shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05)] border border-white backdrop-blur-[4px] rounded"
             >
               {errorMessage}
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
