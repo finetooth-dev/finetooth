@@ -7,7 +7,16 @@ import WorkWithUs from '../components/workWithUs/WorkWithUs';
 import Header from '@/components/Header';
 
 export const metadata: Metadata = {
-  title: 'finetooth',
+  title: 'finetooth.dev',
+  description: 'web design + development',
+  openGraph: {
+    images: [
+      {
+        url: '/images/ogimage.webp',
+        alt: 'Finetooth Open Graph Image',
+      },
+    ],
+  },
 };
 
 const jura = Jura({
