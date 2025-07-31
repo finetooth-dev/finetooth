@@ -115,7 +115,13 @@ const Form: React.FC = () => {
       .join('&');
   };
 
-  const handleSubmit = async () => {
+  const [status, setStatus] = useState<null | 'pending' | 'ok' | 'error'>(null);
+
+  const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
+    if (e) e.preventDefault();
+    setStatus('pending');
+    setErrorMessage('');
+
     const payload = {
       'form-name': 'client-intake',
       name: formData.name,
@@ -124,39 +130,31 @@ const Form: React.FC = () => {
       timelineAndBudget: formData.timelineAndBudget,
       email: formData.email,
       additionalInfo: formData.longAnswer,
-      'bot-field': '',
     };
 
-    await fetch('/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'X-Form-Submission-Debug': 'true',
-      },
-      body: encode(payload),
-    })
-      .then(async (res) => {
-        console.log('Form submitted');
-        const text = await res.text();
-        console.log('Netlify response:', text);
-        // Optionally redirect or show success
-      })
-      .catch((error) => {
-        console.error('Form submission error:', error);
-        setErrorMessage('Something went wrong. Please try again.');
-        setTimeout(() => setErrorMessage(''), 4000);
+    try {
+      const res = await fetch('/__forms.html', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(
+          Object.entries(payload).flatMap(([key, val]) =>
+            Array.isArray(val) ? val.map((v) => [key, v]) : [[key, val]]
+          ) as string[][]
+        ).toString(),
       });
 
-    setErrorMessage('submitting...');
-    setTimeout(() => {
-      setErrorMessage('');
-      setTimeout(() => {
-        setErrorMessage('Success');
-        // setTimeout(() => {
-        //   window.location.href = '/';
-        // }, 1000);
-      }, 1000);
-    }, 500);
+      if (res.status === 200) {
+        setStatus('ok');
+      } else {
+        setStatus('error');
+        setErrorMessage(`${res.status} ${res.statusText}`);
+        setTimeout(() => setStatus(null), 3000);
+      }
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage('Something went wrong. Please try again.');
+      console.error(err);
+    }
   };
 
   const questions: QuestionProps[] = [
@@ -238,8 +236,9 @@ const Form: React.FC = () => {
       currentQuestion.required &&
       (!currentAnswer || currentAnswer.length === 0)
     ) {
+      setStatus('error');
       setErrorMessage('This field is required');
-      setTimeout(() => setErrorMessage(''), 4000);
+      setTimeout(() => setStatus(null), 3000);
       return;
     }
 
@@ -291,20 +290,29 @@ const Form: React.FC = () => {
           >
             [ back ]
           </div>
-          <div
-            onClick={
-              currentStep === questions.length - 1 ? handleSubmit : handleNext
-            }
-            className="hover:opacity-60 transition cursor-pointer"
-          >
-            {currentStep === questions.length - 1 ? '[ submit ]' : '[ next ]'}
-          </div>
+          {currentStep === questions.length - 1 ? (
+            <button
+              type="submit"
+              className="hover:opacity-60 transition cursor-pointer"
+              disabled={status === 'pending'}
+            >
+              [ submit ]
+            </button>
+          ) : (
+            <div
+              onClick={handleNext}
+              className="hover:opacity-60 transition cursor-pointer"
+            >
+              [ next ]
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Error message */}
+      {/* Alerts */}
       <AnimatePresence>
-        {errorMessage && (
+        {/* Status pending */}
+        {status === 'pending' && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -314,6 +322,54 @@ const Form: React.FC = () => {
             style={{
               background:
                 'linear-gradient(45deg, transparent,rgba(237, 237, 237, 0.24))',
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              submitting...{' '}
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Status ok */}
+        {status === 'ok' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.5 }}
+            className="w-full z-40 p-2 bg text-center shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05)] border border-white backdrop-blur-[4px] rounded absolute w-full bottom-0 sm:bottom-64"
+            style={{
+              background:
+                'linear-gradient(45deg, transparent,rgba(237, 237, 237, 0.24))',
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              success!{' '}
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Status error */}
+        {status === 'error' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.5 }}
+            className="w-full z-40 p-2 bg text-center text-white shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05)] border border-white backdrop-blur-[4px] rounded absolute w-full bottom-0 sm:bottom-64"
+            style={{
+              background:
+                'linear-gradient(45deg, transparent,rgba(255, 0, 0, 0.24))',
             }}
           >
             <motion.div
