@@ -256,9 +256,14 @@ function CarouselItem({
   // );
 
   return (
+    // The rotation-derived opacity and the mount fade have to live on separate
+    // elements. Sharing one element makes `initial`/`animate` stamp the same
+    // motion value that `useTransform` owns, and since that transform only
+    // recomputes when `rotation` changes, the stamped 0 sticks until the first
+    // scroll — leaving the whole carousel invisible on load.
     <motion.div
       onClick={onClick}
-      className="absolute backdrop-blur-md carousel-thumbnail"
+      className="absolute carousel-thumbnail"
       style={{
         x: xFormatted,
         y: yFormatted,
@@ -268,17 +273,16 @@ function CarouselItem({
         opacity,
         transformStyle: 'preserve-3d',
       }}
-      animate={{
-        opacity: 1,
-        transition: {
-          duration: 2,
-          delay: 0.2,
-        },
-      }}
-      initial={{ opacity: 0 }}
-      whileTap={{ opacity: 0.8 }}
     >
-      <Suspense fallback={<Loading />}>{children}</Suspense>
+      <motion.div
+        className="backdrop-blur-md"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2, delay: 0.2 }}
+        whileTap={{ opacity: 0.8 }}
+      >
+        <Suspense fallback={<Loading />}>{children}</Suspense>
+      </motion.div>
     </motion.div>
   );
 }

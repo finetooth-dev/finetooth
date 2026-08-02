@@ -1,5 +1,6 @@
 import GlassCard from '@/components/GlassCard';
 import { Carousel } from '@/components/InfiniteCarousel';
+import ProjectChip from '@/components/ProjectChip';
 import projects from '@/util/projects';
 
 const repeatedProjects = [...projects, ...projects, ...projects];
@@ -10,11 +11,7 @@ export default function Home() {
       <Carousel>
         {repeatedProjects.map((project, index) => (
           <GlassCard href={project.slug} key={index} title={project.client}>
-            <img
-              src={project.chipImgURL ? project.chipImgURL : project.bgImgURL}
-              alt={project.col1}
-              className="min-w-full min-h-full object-cover"
-            />
+            <ProjectChip project={project} />
           </GlassCard>
         ))}
       </Carousel>

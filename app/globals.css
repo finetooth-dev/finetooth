@@ -17,9 +17,11 @@ html {
   line-height: 100%;
 }
 
-.carousel-thumbnail:hover {
-  opacity: 0.8 !important;
-  transition: opacity 0.3s ease-in-out;
-  outline: 1px solid white;
-  border-radius: 0.25rem;
+/* The outline lives on the card, not the wrapper, so it travels with the
+   hover translate instead of detaching from the card's edge. */
+@media (hover: hover) and (pointer: fine) {
+  .carousel-thumbnail:hover .glass-card {
+    outline: 1px solid white;
+    border-radius: 0.25rem;
+  }
 }

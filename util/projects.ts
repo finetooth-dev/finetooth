@@ -7,13 +7,37 @@ export type ProjectType = {
   col1: string;
   col2: string;
   bgImgURL: string;
+  /** Looping video used as the modal background, in place of bgImgURL. */
+  bgVideoURL?: string;
   chipImgURL: string;
+  /** Looping video used as the carousel thumbnail, in place of chipImgURL. */
+  chipVideoURL?: string;
+  /** First frame of chipVideoURL, shown while the video loads. */
+  chipPosterURL?: string;
   link: string;
   imageList: string[];
   textTheme: string;
 };
 
 const projects: Array<ProjectType> = [
+  {
+    slug: 'don-toliver',
+    client: 'don toliver',
+    year: '2026',
+    category: 'octane prix',
+    role: 'design',
+    col1: '',
+    col2: '',
+    // no background image — the modal falls back to its own glass gradient,
+    // so the text theme is dark to stay readable against it
+    bgImgURL: '',
+    chipImgURL: '',
+    chipVideoURL: '/videos/octane-prix-cropped.mp4',
+    chipPosterURL: '/videos/octane-prix-cropped.webp',
+    imageList: ['/images/octane-prix-game.webp'],
+    link: '',
+    textTheme: 'dark',
+  },
   {
     slug: 'daniel-laner',
     client: 'daniellaner.com',
@@ -68,6 +92,24 @@ const projects: Array<ProjectType> = [
     chipImgURL: '',
     imageList: ['/images/paths.png'],
     link: 'archived',
+    textTheme: 'light',
+  },
+  {
+    slug: 'channel-tres',
+    client: 'channel tres',
+    year: '2026',
+    category: 'artist site',
+    role: 'design + development',
+    col1: '',
+    col2: '',
+    // the reel doubles as the modal background and the carousel thumbnail
+    bgImgURL: '',
+    bgVideoURL: '/videos/channel-tres-cropped.mp4',
+    chipImgURL: '',
+    chipVideoURL: '/videos/channel-tres-cropped.mp4',
+    chipPosterURL: '/videos/channel-tres-cropped.webp',
+    imageList: ['/images/channel-tres-1.webp', '/images/channel-tres-2.webp'],
+    link: 'https://www.channeltres.net/',
     textTheme: 'light',
   },
   {

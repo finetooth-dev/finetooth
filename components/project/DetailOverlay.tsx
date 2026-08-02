@@ -17,7 +17,8 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
     const modalBackground = document.getElementById('modalBackground');
     const modalItself = document.getElementById('modalItself');
 
-    if (modalBackground && modalItself) {
+    // modalBackground is absent for projects with no bgImgURL; the modal still tilts
+    if (modalItself) {
       const handleMouseMove = (e: MouseEvent) => {
         const rect = modalItself.getBoundingClientRect();
 
@@ -36,7 +37,7 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
         const rotateX = (yDecimal - 0.5) * 2;
         const rotateY = (xDecimal - 0.5) * 2;
 
-        modalBackground.animate(
+        modalBackground?.animate(
           {
             transform: `translate(${panX}px, ${panY}px)`,
           },
@@ -59,7 +60,7 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
       };
 
       const handleMouseLeave = () => {
-        modalBackground.animate(
+        modalBackground?.animate(
           {
             transform: `translate(0px, 0px)`,
           },
@@ -135,17 +136,33 @@ const DetailOverlay: React.FC<DetailOverlayProps> = ({ project }) => {
           project.textTheme === 'dark' ? 'text-neutral-700' : 'text-neutral-100'
         }`}
       >
-        <div
-          data-name="background-vid"
-          id="modalBackground"
-          className=" absolute z-0 t-0 overflow-visible"
-        >
-          <img
-            className="w-full h-full object-cover"
-            src={project.bgImgURL}
-            alt="Background"
-          />
-        </div>
+        {project.bgVideoURL || project.bgImgURL ? (
+          <div
+            data-name="background-vid"
+            id="modalBackground"
+            className=" absolute z-0 t-0 overflow-visible"
+          >
+            {project.bgVideoURL ? (
+              <video
+                className="w-full h-full object-cover"
+                src={project.bgVideoURL}
+                poster={project.chipPosterURL}
+                // muted + playsInline are both required for autoplay on iOS Safari
+                autoPlay
+                muted
+                loop
+                playsInline
+                aria-hidden
+              />
+            ) : (
+              <img
+                className="w-full h-full object-cover"
+                src={project.bgImgURL}
+                alt="Background"
+              />
+            )}
+          </div>
+        ) : null}
 
         <div
           className="grid h-full z-1 overflow-hidden"
